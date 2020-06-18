@@ -1,0 +1,113 @@
+import 'package:SocialMediaApp/data/data.dart';
+import 'package:SocialMediaApp/screens/home_screen.dart';
+import 'package:SocialMediaApp/screens/login_screen.dart';
+import 'package:SocialMediaApp/screens/profile_screen.dart';
+import 'package:SocialMediaApp/utils/text_style.dart';
+import 'package:flutter/material.dart';
+
+class CustomDrawer extends StatelessWidget {
+  _buildDrawerOption(Icon icon, String title, Function onTap) {
+    return ListTile(
+      leading: icon,
+      title: CustomTextStyle(
+        text: title,
+        size: 20.0,
+      ),
+      onTap: onTap,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Image(
+                image: AssetImage(currentUser.backgroundImageUrl),
+                height: 200.0,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                bottom: 20.0,
+                left: 20.0,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      height: 100.0,
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 3.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      child: ClipOval(
+                        child: Image(
+                          image: AssetImage(
+                            currentUser.profileImageUrl,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 6.0),
+                    CustomTextStyle(
+                      text: currentUser.name,
+                      color: Colors.white,
+                      size: 25.0,
+                      font: FontWeight.bold,
+                      spacing: 1.5,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          _buildDrawerOption(
+            Icon(Icons.dashboard),
+            'Home',
+            () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => HomeScreen(),
+              ),
+            ),
+          ),
+          _buildDrawerOption(Icon(Icons.chat), 'Chat', () {}),
+          _buildDrawerOption(Icon(Icons.location_on), 'Map', () {}),
+          _buildDrawerOption(
+            Icon(Icons.account_circle),
+            'Profile',
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProfileScreen(user: currentUser),
+              ),
+            ),
+          ),
+          _buildDrawerOption(Icon(Icons.settings), 'Settings', () {}),
+          Expanded(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: _buildDrawerOption(
+                Icon(Icons.directions_run),
+                'Logout',
+                () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => LoginScreen(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
