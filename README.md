@@ -5,7 +5,7 @@ Flutter Social Media App UI
 ## Screens
 
 <p align="center">
-  <img src="output.gif" width="256" height="400">
+  <img src="output.gif" width="200" height="300">
 
 </p>
 
